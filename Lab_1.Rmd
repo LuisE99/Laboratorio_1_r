@@ -1,0 +1,103 @@
+EJERCICIO 1 - VECTORES Y MATRICES
+```{r}
+#-----------------1.1--------------------------
+student_1 <- c(50.4, 62.3, 92.1, 77.6, TRUE)
+student_2 <- c(41.7, 87.9, 75.3, 72.4, FALSE)
+student_3 <- c(30.3, 67.8, 69.3, 71.2, FALSE)
+student_4 <- c(65.4, 85.1, 92.3, 96.8, FALSE)
+student_5 <- c(70.4, 88.2, 95.2, 90.7, TRUE)
+
+#-----------------1.2--------------------------
+students_vector <- c(student_1, student_2, student_3, student_4, student_5)
+
+#-----------------1.3--------------------------
+students_matrix <- matrix(students_vector, byrow = TRUE, nrow = 5)
+```
+
+EJERCICIO 2 - NOMBRADO DE UNA MATRIZ
+```{r}
+#-----------------2.1--------------------------
+name_students <- c("Lily Brown", "Davis Moore", "Susan Taylor", "Mike Jones", "Tom Hill")
+name_courses_legal_age <- c("TIC", "Accounting", "Psychology", "Ethics", "Legal_age")
+
+#-----------------2.2--------------------------
+colnames(students_matrix) <- name_courses_legal_age
+rownames(students_matrix) <- name_students
+```
+
+
+EJERCICIO 3 - rowSums, cbind
+```{r}
+#-----------------3.1--------------------------
+students_matrix_1 <- students_matrix[1:5,1:4]
+total_grade_student <- rowSums(students_matrix[1:5,1:4])
+
+#-----------------3.2--------------------------
+result_students <- cbind(students_matrix, total_grade_student)
+
+```
+
+EJERCICIO 4 - SELECCIONANDO ELEMENTOS DE UNA MATRIZ
+```{r}
+#-----------------4.1--------------------------
+selected_elements <- result_students[c(1,3,5),c(2,4)]
+print(selected_elements)
+```
+EJERCICIO 5 - DATA FRAMES 
+```{r}
+#-----------------5.1--------------------------
+students_grade_df <- data.frame(result_students)
+
+#-----------------5.2--------------------------
+subset(students_grade_df, subset = students_grade_df$Accounting > 80 & students_grade_df$Legal_age == TRUE)
+
+```
+
+EJERCICIO 6 - FUNCIONES, CONDICIONALES Y BUCLES
+```{r}
+#-----------------6.1 y 6.2--------------------------
+students_projection <- function(result_students){
+  
+  for (i in 1:nrow(result_students)) {
+    for(j in 1:ncol(result_students[,1:4])){
+      note_student <- result_students[i,j]
+      #print(paste("En la fila", i, "y columna", j ,"la matriz contiene la nota", result_students[i,j]))
+      if(note_student <= 45){
+        print("Student at risk")
+      } else if(note_student >= 45 & note_student < 61 ){
+        print("Student may be approved")
+      } else if(note_student > 61){
+        print("Student approved")
+      } else {
+        print("Wrong note")
+      }
+    }
+  }
+}
+
+#-----------------6.3--------------------------
+students_projection(result_students)
+
+```
+
+EJERCICIO 7 - DATA FRAMES Y lappy
+```{r}
+#-----------------7.1--------------------------
+index_education <- function(grade){
+  (1+(grade/100))/2
+}
+
+#-----------------7.2--------------------------
+all_students_grade <- students_grade_df[,1:4]
+
+#-----------------7.3--------------------------
+lapply(all_students_grade, index_education)
+```
+
+EJERCICIO 8 - MATH UTIILITIES
+```{r}
+score_mean <- sapply(students_grade_df[,1:4], mean)
+```
+
+ 
+ 
